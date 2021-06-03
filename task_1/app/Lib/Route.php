@@ -5,14 +5,16 @@ class Route
 {
 	public static function get($uri, $action)
 	{
-		if(self::uriHas($uri))
+		$type = $_SERVER['REQUEST_METHOD'];
+
+		if($type == 'GET' && self::uriHas($uri))
 		{
 			$action_items = explode('@', $action);
 			$controller = $action_items[0]; $method = $action_items[1];
 			$controller = "\App\Http\\" . $controller;
 
 			$controller = new $controller();
-			
+
 			$controller->{$method}();
 		}
 	}

@@ -3,13 +3,20 @@ namespace App\Lib;
 
 class View
 {
-	public static function render($view_file)
+	public static function render($view_file, $data = null)
 	{
-		return self::load_view($view_file);
+		if($data)
+		{
+			foreach($data as $key => $value)
+			{
+				${$key} = $value;
+			}
+		}
+		require(self::get_file_path($view_file));
 	}
 
-	private static function load_view($file)
+	private static function get_file_path($file)
 	{
-		return require(__DIR__ . '/../../resources/views/' . $file . '.php');
+		return __DIR__ . '/../../resources/views/' . $file . '.php';
 	}
 }
